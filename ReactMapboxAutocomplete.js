@@ -63,10 +63,9 @@ const ReactMapboxAutocomplete = React.createClass ({
                type='text'/>
         <span>
           <div className='react-mapbox-ac-menu'
-               style={this.state.queryResults.length > 0 ? { display: 'block' } 
-                      : { display: 'none' }}
-                onClick={this._resetSearch}>
-
+               style={this.state.queryResults ? { display: 'block' } 
+               : { display: 'none' }}
+               onClick={this._resetSearch}>
 
             {
               _.map(this.state.queryResults, (place, i) => {

@@ -78,7 +78,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'react-mapbox-ac-menu',
-            style: this.state.queryResults.length > 0 ? { display: 'block' } : { display: 'none' },
+            style: this.state.queryResults ? { display: 'block' } : { display: 'none' },
             onClick: this._resetSearch },
           _lodash2.default.map(this.state.queryResults, function (place, i) {
             return _react2.default.createElement(
