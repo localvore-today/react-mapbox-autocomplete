@@ -22,13 +22,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ReactMapboxAutocomplete = _react2.default.createClass({
   displayName: 'ReactMapboxAutocomplete',
-
-  publicKey: undefined.props.publicKey,
-
   getInitialState: function getInitialState() {
     var state = {
       query: '',
-      queryResults: []
+      queryResults: [],
+      publicKey: this.props.publicKey
     };
 
     return state;
@@ -42,7 +40,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       'Content-Type': 'application/json'
     };
 
-    var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.publicKey + '&country=us';
+    var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey + '&country=us';
 
     if (this.state.query.length > 2) {
       return fetch(path, {

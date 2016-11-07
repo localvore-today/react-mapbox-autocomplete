@@ -5,12 +5,11 @@ import 'es6-promises';
 import _ from 'lodash';
 
 const ReactMapboxAutocomplete = React.createClass ({
-  publicKey: this.props.publicKey,
-
   getInitialState() {
     let state =  {
       query: '',
       queryResults: [],
+      publicKey: this.props.publicKey
     }
       
     return state;
@@ -26,7 +25,7 @@ const ReactMapboxAutocomplete = React.createClass ({
     let path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
                 this.state.query + 
                 '.json?access_token=' +
-                this.publicKey +
+                this.state.publicKey +
                 '&country=us'
 
     if(this.state.query.length > 2) {
