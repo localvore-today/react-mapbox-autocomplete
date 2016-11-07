@@ -2,6 +2,8 @@
   width: auto;
   position: absolute;
   z-index: 9999;
+  background-color: #fff;
+  border: 1px solid #ccc;
 }
 
 .react-mapbox-ac-suggestion {

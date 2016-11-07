@@ -1,7 +1,5 @@
 import React from 'react';
 import './index.css';
-import 'isomorphic-fetch';
-import 'es6-promises';
 import _ from 'lodash';
 
 const ReactMapboxAutocomplete = React.createClass ({
