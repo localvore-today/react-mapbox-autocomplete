@@ -18,6 +18,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ReactMapboxAutocomplete = _react2.default.createClass({
   displayName: 'ReactMapboxAutocomplete',
+
+  propTypes: {
+    inputClass: _react2.default.PropTypes.string,
+    publicKey: _react2.default.PropTypes.string.isRequired,
+    placeholder: _react2.default.PropTypes.string,
+    onSuggestionSelect: _react2.default.PropTypes.func.isRequired
+  },
+
   getInitialState: function getInitialState() {
     var state = {
       query: '',
@@ -70,7 +78,6 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
         className: this.props.inputClass ? this.props.inputClass + ' react-mapbox-ac-input' : 'react-mapbox-ac-input',
         onChange: this._updateQuery,
         value: this.state.query,
-        id: 'mapbox-auto-complete',
         type: 'text' }),
       _react2.default.createElement(
         'span',
@@ -78,7 +85,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'react-mapbox-ac-menu',
-            style: this.state.queryResults ? { display: 'block' } : { display: 'none' },
+            style: this.state.queryResults.length > 0 ? { display: 'block' } : { display: 'none' },
             onClick: this._resetSearch },
           _lodash2.default.map(this.state.queryResults, function (place, i) {
             return _react2.default.createElement(

@@ -3,6 +3,13 @@ import './index.css';
 import _ from 'lodash';
 
 const ReactMapboxAutocomplete = React.createClass ({
+  propTypes: {
+    inputClass: React.PropTypes.string,
+    publicKey: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string,
+    onSuggestionSelect: React.PropTypes.func.isRequired,
+  },
+
   getInitialState() {
     let state =  {
       query: '',
@@ -59,11 +66,10 @@ const ReactMapboxAutocomplete = React.createClass ({
                           : 'react-mapbox-ac-input'} 
                onChange={this._updateQuery}
                value={this.state.query}
-               id='mapbox-auto-complete'
                type='text'/>
         <span>
           <div className='react-mapbox-ac-menu'
-               style={this.state.queryResults ? { display: 'block' } 
+               style={this.state.queryResults.length > 0 ? { display: 'block' } 
                : { display: 'none' }}
                onClick={this._resetSearch}>
 
