@@ -43,6 +43,13 @@ const ReactMapboxAutocomplete = React.createClass ({
     }
   },
 
+  _resetSearch() {
+    this.setState({
+      query: '',
+      queryResults: []
+    })
+  },
+
   render() {
     return (
       <div>
@@ -56,7 +63,8 @@ const ReactMapboxAutocomplete = React.createClass ({
         <span>
           <div className='react-mapbox-ac-menu'
                style={this.state.queryResults ? { display: 'block' } 
-                      : { display: 'none' }}>
+                      : { display: 'none' }}
+                onClick={this._resetSearch}>
 
 
             {

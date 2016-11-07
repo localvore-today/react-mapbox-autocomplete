@@ -10,10 +10,6 @@ var _react2 = _interopRequireDefault(_react);
 
 require('./index.css');
 
-require('isomorphic-fetch');
-
-require('es6-promises');
-
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -58,6 +54,12 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       }));
     }
   },
+  _resetSearch: function _resetSearch() {
+    this.setState({
+      query: '',
+      queryResults: []
+    });
+  },
   render: function render() {
     var _this2 = this;
 
@@ -75,7 +77,8 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'react-mapbox-ac-menu',
-            style: this.state.queryResults ? { display: 'block' } : { display: 'none' } },
+            style: this.state.queryResults ? { display: 'block' } : { display: 'none' },
+            onClick: this._resetSearch },
           _lodash2.default.map(this.state.queryResults, function (place, i) {
             return _react2.default.createElement(
               'div',
