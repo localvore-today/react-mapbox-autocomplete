@@ -91,6 +91,7 @@ You can style the following classes as you see fit.
 
 ## ToDo
 1. Tests
+2. Add Examples
 
 ## Contributing 
 If you would like to contribute to react-mapbox-autocomplete fork the project
