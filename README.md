@@ -92,6 +92,7 @@ You can style the following classes as you see fit.
 ## ToDo
 1. Tests
 2. Add Examples
+3. Add all query params as Props
 
 ## Contributing 
 If you would like to contribute to react-mapbox-autocomplete fork the project
