@@ -8,7 +8,9 @@ simple to use.
 
 ## Dependencies
 Lodash
+
 React 15+
+
 Mapbox Account + API Key
 
 react-mapbox-autocomplete is designed to be agnostic of environment. Works with
