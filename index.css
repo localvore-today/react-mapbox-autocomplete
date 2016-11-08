@@ -10,15 +10,13 @@
 }
 
 .react-mapbox-ac-input {
-  padding: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .react-mapbox-ac-suggestion {
   font-size: 18px;
-  margin-bottom: .5rem;
   cursor: pointer;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding: 1rem;
 }
 
 .react-mapbox-ac-suggestion:hover {
