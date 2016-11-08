@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
-import { map, extend } from 'lodash';
+import map from 'lodash/map';
+import extend from 'lodash/extend';
 
 const ReactMapboxAutocomplete = React.createClass ({
   propTypes: {

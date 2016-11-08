@@ -10,7 +10,13 @@ var _react2 = _interopRequireDefault(_react);
 
 require('./index.css');
 
-var _lodash = require('lodash');
+var _map = require('lodash/map');
+
+var _map2 = _interopRequireDefault(_map);
+
+var _extend = require('lodash/extend');
+
+var _extend2 = _interopRequireDefault(_extend);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
