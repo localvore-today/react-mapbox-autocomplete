@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/localvore-today/react-redux-mapbox-autocomplete.git"
+    "url": "git+https://github.com/localvore-today/react-mapbox-autocomplete.git"
   },
   "keywords": [
     "react",
@@ -21,11 +21,11 @@
   "author": "Localvore Today",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/localvore-today/react-redux-mapbox-autocomplete/issues"
+    "url": "https://github.com/localvore-today/react-mapbox-autocomplete/issues"
   },
-  "homepage": "https://github.com/localvore-today/react-redux-mapbox-autocomplete#readme",
+  "homepage": "https://github.com/localvore-today/react-mapbox-autocomplete#readme",
   "dependencies": {
-    "lodash": "^4.16.6",
+    "lodash": "^4",
     "react": "^15",
     "react-dom": "^15"
   },

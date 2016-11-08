@@ -12,8 +12,6 @@ require('./index.css');
 
 var _lodash = require('lodash');
 
-var _lodash2 = _interopRequireDefault(_lodash);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ReactMapboxAutocomplete = _react2.default.createClass({
@@ -39,7 +37,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
   _updateQuery: function _updateQuery(event) {
     var _this = this;
 
-    this.setState(_lodash2.default.extend(this.state, { query: event.target.value }));
+    this.setState(_.extend(this.state, { query: event.target.value }));
 
     var header = {
       'Content-Type': 'application/json'
@@ -57,12 +55,12 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       }).then(function (res) {
         return res.json();
       }).then(function (json) {
-        _this.setState(_lodash2.default.extend(_this.state, {
+        _this.setState(_.extend(_this.state, {
           queryResults: json.features
         }));
       });
     } else {
-      this.setState(_lodash2.default.extend(this.state, {
+      this.setState(_.extend(this.state, {
         queryResults: []
       }));
     }
@@ -92,7 +90,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
           { className: 'react-mapbox-ac-menu',
             style: this.state.queryResults.length > 0 ? { display: 'block' } : { display: 'none' },
             onClick: this._resetSearch },
-          _lodash2.default.map(this.state.queryResults, function (place, i) {
+          _.map(this.state.queryResults, function (place, i) {
             return _react2.default.createElement(
               'div',
               { className: 'react-mapbox-ac-suggestion',
