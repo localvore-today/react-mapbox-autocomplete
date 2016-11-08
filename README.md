@@ -24,7 +24,7 @@ with any version of ES.
 
 ## Example(ES6)
 
-#### Available PropTypes
+### Available PropTypes
 
 publicKey:*Required(String)*
 
@@ -34,7 +34,7 @@ country:*Optional(String)*
 
 onSuggestionSelect:*Required(Func)*:For handling suggestion selections
 
-#### Retriving Suggestion Information
+### Retriving Suggestion Information
 you can retrive the event data by targeting event.target.dataset.city as seen in
 the example below.
 
@@ -45,13 +45,13 @@ the example below.
 ```
 
 ```javascript
-import MapboxAutocomplete from 'react-mapbox-autocomplete'
+import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 _suggestionSelect(event) {
   this._submitSelection(event.target.dataset.city)
 }
 
-<MapboxAutocomplete publicKey={this.PK} 
+<MapboxAutocomplete publicKey='Your Mapbox Public Key' 
                     inputClass='form-control search'
                     onSuggestionSelect={this._suggestionSelect}
                     country='US'/>
