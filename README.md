@@ -15,7 +15,7 @@ Mapbox Account + API Key
 
 react-mapbox-autocomplete is designed to be agnostic of environment. Works with
 any data store(redux, flux, etc) and is compiled to vanilla javascript to work
-with and version of ES.
+with any version of ES.
 
 ## Installation
 
@@ -26,14 +26,13 @@ with and version of ES.
 
 #### Available PropTypes
 
-publicKey:Required
+publicKey:*Required(String)*
 
-inputClass:Optional
-Used for passing bootstrap or other classes for inputstyling
+inputClass:*Optional(String)*:Used for passing bootstrap or other classes for input styling
 
-country:Optional
+country:*Optional(String)*
 
-onSuggestionSelect:Required:For handling suggestion selections
+onSuggestionSelect:*Required(Func)*:For handling suggestion selections
 
 #### Retriving Suggestion Information
 you can retrive the event data by targeting event.target.dataset.city as seen in
