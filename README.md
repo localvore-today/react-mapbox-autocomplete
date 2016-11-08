@@ -2,9 +2,8 @@
 
 Maintained and Developed By: [Localvore Today](http://www.localvoretoday.com)
 
-The component uses mapbox api to fetch geocoordinates and autocompelete
-locations without mapbox maps. It's designed to be extremely light weight and
-simple to use.
+The component uses mapbox api to autocompelete cities and states without mapbox
+maps. It's designed to be extremely light weight and simple to use.
 
 ## Dependencies
 Lodash
@@ -48,7 +47,7 @@ seen in the example below.
 import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 _suggestionSelect(event) {
-  this._submitSelection(event.target.dataset.suggestion)
+  console.log(event.target.dataset.suggestion)
 }
 
 <MapboxAutocomplete publicKey='Your Mapbox Public Key' 
@@ -93,6 +92,7 @@ You can style the following classes as you see fit.
 1. Tests
 2. Add Examples
 3. Add all query params as Props
+4. Include Geo Location in response
 
 ## Contributing 
 If you would like to contribute to react-mapbox-autocomplete fork the project
