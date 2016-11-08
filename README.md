@@ -35,8 +35,8 @@ country:*Optional(String)*
 onSuggestionSelect:*Required(Func)*:For handling suggestion selections
 
 ### Retriving Suggestion Information
-you can retrive the event data by targeting event.target.dataset.city as seen in
-the example below.
+you can retrive the event data by targeting event.target.dataset.suggestion as
+seen in the example below.
 
 ```css
 .search {
