@@ -54,7 +54,7 @@ _suggestionSelect(event) {
 <MapboxAutocomplete publicKey='Your Mapbox Public Key' 
                     inputClass='form-control search'
                     onSuggestionSelect={this._suggestionSelect}
-                    country='US'/>
+                    country='us'/>
 ```
 
 ## Styling

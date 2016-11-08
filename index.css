@@ -16,7 +16,7 @@
 .react-mapbox-ac-suggestion {
   font-size: 18px;
   cursor: pointer;
-  padding: 1rem;
+  padding: .5rem 1.5rem;
 }
 
 .react-mapbox-ac-suggestion:hover {
