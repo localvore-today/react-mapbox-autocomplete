@@ -48,7 +48,7 @@ the example below.
 import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 _suggestionSelect(event) {
-  this._submitSelection(event.target.dataset.city)
+  this._submitSelection(event.target.dataset.suggestion)
 }
 
 <MapboxAutocomplete publicKey='Your Mapbox Public Key' 

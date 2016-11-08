@@ -88,7 +88,7 @@ const ReactMapboxAutocomplete = React.createClass ({
                   <div className='react-mapbox-ac-suggestion'
                        onClick={this.props.onSuggestionSelect}
                        key={i}
-                       data-city={place.place_name}>
+                       data-suggestion={place.place_name}>
 
                     {place.place_name}
 

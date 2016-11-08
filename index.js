@@ -98,7 +98,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
               { className: 'react-mapbox-ac-suggestion',
                 onClick: _this2.props.onSuggestionSelect,
                 key: i,
-                'data-city': place.place_name },
+                'data-suggestion': place.place_name },
               place.place_name
             );
           })
