@@ -23,7 +23,8 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
     inputClass: _react2.default.PropTypes.string,
     publicKey: _react2.default.PropTypes.string.isRequired,
     placeholder: _react2.default.PropTypes.string,
-    onSuggestionSelect: _react2.default.PropTypes.func.isRequired
+    onSuggestionSelect: _react2.default.PropTypes.func.isRequired,
+    country: _react2.default.PropTypes.string
   },
 
   getInitialState: function getInitialState() {
@@ -44,7 +45,11 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       'Content-Type': 'application/json'
     };
 
-    var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey + '&country=us';
+    if (this.props.country) {
+      var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey + '&country=' + this.props.country;
+    } else {
+      path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey;
+    }
 
     if (this.state.query.length > 2) {
       return fetch(path, {
