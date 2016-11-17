@@ -5,6 +5,13 @@ Maintained and Developed By: [Localvore Today](http://www.localvoretoday.com)
 The component uses mapbox api to autocompelete cities and states without mapbox
 maps. It's designed to be extremely light weight and simple to use.
 
+## Change Log
+```
+version 0.2.0
+Add the ability to prepopulate the input field using the query param
+Resetting the input after selection is now optional
+Added lat, lng, and text to event.target.dataset
+```
 ## Dependencies
 Lodash
 
@@ -25,13 +32,18 @@ with any version of ES.
 
 ### Available PropTypes
 
-publicKey:*Required(String)*
+publicKey:**Required(String)**
 
-inputClass:*Optional(String)*:Used for passing bootstrap or other classes for input styling
+inputClass:**Optional(String)**:Used for passing bootstrap or other classes for input styling
 
-country:*Optional(String)*
+country:**Optional(String)**
 
-onSuggestionSelect:*Required(Func)*:For handling suggestion selections
+onSuggestionSelect:**Required(Func)**:For handling suggestion selections
+
+query:**Optional(String)**:Pre-populate search field
+
+resetSearch:**Optional(Boolean)**: Default is false. Resets the input field
+after suggestion select
 
 ### Retriving Suggestion Information
 you can retrive the event data by targeting event.target.dataset.suggestion as
@@ -47,13 +59,16 @@ seen in the example below.
 import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 _suggestionSelect(event) {
-  console.log(event.target.dataset.suggestion)
+  console.log(event.target.dataset.suggestion,
+  event.target.dataset.lng, event.target.dataset.lat,
+  event.target.dataset.text)
 }
 
 <MapboxAutocomplete publicKey='Your Mapbox Public Key' 
                     inputClass='form-control search'
                     onSuggestionSelect={this._suggestionSelect}
-                    country='us'/>
+                    country='us'
+                    resetSearch={false}/>
 ```
 
 ## Styling
@@ -92,7 +107,6 @@ You can style the following classes as you see fit.
 1. Tests
 2. Add Examples
 3. Add all query params as Props
-4. Include Geo Location in response
 
 ## Contributing 
 If you would like to contribute to react-mapbox-autocomplete fork the project
