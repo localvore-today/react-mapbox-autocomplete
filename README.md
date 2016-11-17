@@ -1,4 +1,5 @@
-# React Geo Location Component based on Mapbox
+# Independent geolocation autocomplete component based on [Mapbox]
+(http://www.mapbox.com) Geo API
 
 Maintained and Developed By: [Localvore Today](http://www.localvoretoday.com)
 
