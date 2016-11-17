@@ -1,6 +1,7 @@
 # Independent geolocation autocomplete component based on Mapbox
 
 [Mapbox](http://www.mapbox.com) Geo API
+
 Maintained and Developed By: [Localvore Today](http://www.localvoretoday.com)
 
 The component uses mapbox api to autocompelete cities and states without mapbox
