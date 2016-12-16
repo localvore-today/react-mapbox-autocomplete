@@ -76,13 +76,13 @@ const ReactMapboxAutocomplete = React.createClass ({
   },
 
   _onSuggestionSelect(event) {
-    this.props.onSuggestionSelect
-
     if(this.state.resetSearch === false) {
       this.setState(_.extend(this.state, {
         query: event.target.dataset.suggestion
       }))
     }
+
+    this.props.onSuggestionSelect(event.target.dataset.suggestion)
   },
 
   render() {
@@ -105,7 +105,7 @@ const ReactMapboxAutocomplete = React.createClass ({
               _.map(this.state.queryResults, (place, i) => {
                 return(
                   <div className='react-mapbox-ac-suggestion'
-                       onClick={this.onSuggestionSelect}
+                       onClick={this._onSuggestionSelect}
                        key={i}
                        data-suggestion={place.place_name}
                        data-lng={place.center[0]}
