@@ -20,11 +20,11 @@ const ReactMapboxAutocomplete = React.createClass ({
       publicKey: this.props.publicKey,
       resetSearch: this.props.resetSearch ? this.props.resetSearch : false
     }
-      
+
     return state;
   },
 
-  _updateQuery(event) {                 
+  _updateQuery(event) {
     this.setState(_.extend(this.state, {query: event.target.value}))
 
     let header = {
@@ -33,14 +33,14 @@ const ReactMapboxAutocomplete = React.createClass ({
 
     if(this.props.country) {
       var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-                  this.state.query + 
+                  this.state.query +
                   '.json?access_token=' +
                   this.state.publicKey +
                   '&country=' +
                   this.props.country
     } else {
       path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-              this.state.query + 
+              this.state.query +
               '.json?access_token=' +
               this.state.publicKey
     }
@@ -75,19 +75,29 @@ const ReactMapboxAutocomplete = React.createClass ({
     }
   },
 
+  _onSuggestionSelect(event) {
+    if(this.state.resetSearch === false) {
+      this.setState(_.extend(this.state, {
+        query: event.target.dataset.suggestion
+      }))
+    }
+
+    this.props.onSuggestionSelect(event.target.dataset.suggestion)
+  },
+
   render() {
     return (
       <div>
-        <input placeholder={ this.props.placeholder || 'Search' } 
-               className={this.props.inputClass ? 
+        <input placeholder={ this.props.placeholder || 'Search' }
+               className={this.props.inputClass ?
                           this.props.inputClass + ' react-mapbox-ac-input'
-                          : 'react-mapbox-ac-input'} 
+                          : 'react-mapbox-ac-input'}
                onChange={this._updateQuery}
                value={this.state.query}
                type='text'/>
         <span>
           <div className='react-mapbox-ac-menu'
-               style={this.state.queryResults.length > 0 ? { display: 'block' } 
+               style={this.state.queryResults.length > 0 ? { display: 'block' }
                : { display: 'none' }}
                onClick={this._resetSearch}>
 
@@ -95,7 +105,7 @@ const ReactMapboxAutocomplete = React.createClass ({
               _.map(this.state.queryResults, (place, i) => {
                 return(
                   <div className='react-mapbox-ac-suggestion'
-                       onClick={this.props.onSuggestionSelect}
+                       onClick={this._onSuggestionSelect}
                        key={i}
                        data-suggestion={place.place_name}
                        data-lng={place.center[0]}

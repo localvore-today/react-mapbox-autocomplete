@@ -80,6 +80,15 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       }));
     }
   },
+  _onSuggestionSelect: function _onSuggestionSelect(event) {
+    if (this.state.resetSearch === false) {
+      this.setState(_.extend(this.state, {
+        query: event.target.dataset.suggestion
+      }));
+    }
+
+    this.props.onSuggestionSelect(event.target.dataset.suggestion);
+  },
   render: function render() {
     var _this2 = this;
 
@@ -103,7 +112,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
             return _react2.default.createElement(
               'div',
               { className: 'react-mapbox-ac-suggestion',
-                onClick: _this2.props.onSuggestionSelect,
+                onClick: _this2._onSuggestionSelect,
                 key: i,
                 'data-suggestion': place.place_name,
                 'data-lng': place.center[0],
