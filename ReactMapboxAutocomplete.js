@@ -82,7 +82,12 @@ const ReactMapboxAutocomplete = React.createClass ({
       }))
     }
 
-    this.props.onSuggestionSelect(event.target.dataset.suggestion)
+    this.props.onSuggestionSelect(
+      event.target.dataset.suggestion,
+      event.target.dataset.lat,
+      event.target.dataset.lng,
+      event.target.dataset.text
+    )
   },
 
   render() {

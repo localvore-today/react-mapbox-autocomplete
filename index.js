@@ -87,7 +87,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       }));
     }
 
-    this.props.onSuggestionSelect(event.target.dataset.suggestion);
+    this.props.onSuggestionSelect(event.target.dataset.suggestion, event.target.dataset.lat, event.target.dataset.lng, event.target.dataset.text);
   },
   render: function render() {
     var _this2 = this;

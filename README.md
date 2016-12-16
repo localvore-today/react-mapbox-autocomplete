@@ -9,6 +9,9 @@ maps. It's designed to be extremely light weight and simple to use.
 
 ## Change Log
 ```
+version 0.2.2
+Bug fixes for search results when resetSearch is false
+
 version 0.2.0
 Add the ability to prepopulate the input field using the query param
 Resetting the input after selection is now optional
@@ -60,13 +63,11 @@ seen in the example below.
 ```javascript
 import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
-_suggestionSelect(event) {
-  console.log(event.target.dataset.suggestion,
-  event.target.dataset.lng, event.target.dataset.lat,
-  event.target.dataset.text)
+_suggestionSelect(result, lat, lng, text) {
+  console.log(result, lat, lng, text)
 }
 
-<MapboxAutocomplete publicKey='Your Mapbox Public Key' 
+<MapboxAutocomplete publicKey='Your Mapbox Public Key'
                     inputClass='form-control search'
                     onSuggestionSelect={this._suggestionSelect}
                     country='us'
@@ -110,8 +111,6 @@ You can style the following classes as you see fit.
 2. Add Examples
 3. Add all query params as Props
 
-## Contributing 
+## Contributing
 If you would like to contribute to react-mapbox-autocomplete fork the project
 and submit a pull request.
-
-
