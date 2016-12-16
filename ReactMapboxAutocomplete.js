@@ -8,14 +8,17 @@ const ReactMapboxAutocomplete = React.createClass ({
     publicKey: React.PropTypes.string.isRequired,
     placeholder: React.PropTypes.string,
     onSuggestionSelect: React.PropTypes.func.isRequired,
-    country: React.PropTypes.string
+    country: React.PropTypes.string,
+    query: React.PropTypes.string,
+    resetSearch: React.PropTypes.bool
   },
 
   getInitialState() {
-    let state =  {
-      query: '',
+    let state = {
+      query: this.props.query ? this.props.query : '',
       queryResults: [],
-      publicKey: this.props.publicKey
+      publicKey: this.props.publicKey,
+      resetSearch: this.props.resetSearch ? this.props.resetSearch : false
     }
       
     return state;
@@ -60,10 +63,16 @@ const ReactMapboxAutocomplete = React.createClass ({
   },
 
   _resetSearch() {
-    this.setState({
-      query: '',
-      queryResults: []
-    })
+    if(this.state.resetSearch) {
+      this.setState({
+        query: '',
+        queryResults: []
+      })
+    } else {
+      this.setState(_.extend(this.state, {
+        queryResults: []
+      }))
+    }
   },
 
   render() {
@@ -88,7 +97,10 @@ const ReactMapboxAutocomplete = React.createClass ({
                   <div className='react-mapbox-ac-suggestion'
                        onClick={this.props.onSuggestionSelect}
                        key={i}
-                       data-suggestion={place.place_name}>
+                       data-suggestion={place.place_name}
+                       data-lng={place.center[0]}
+                       data-lat={place.center[1]}
+                       data-text={place.text}>
 
                     {place.place_name}
 

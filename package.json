@@ -1,7 +1,7 @@
 {
   "name": "react-mapbox-autocomplete",
-  "version": "0.1.0",
-  "description": "independent react componet for mapbox autocomplete",
+  "version": "0.2.0",
+  "description": "independent react component for mapbox autocomplete",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel ReactMapboxAutocomplete.js -o index.js",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/localvore-today/react-mapbox-autocomplete#readme",
   "dependencies": {
+    "lodash": "^4",
     "lodash-es": "^4",
     "react": "^15",
     "react-dom": "^15"

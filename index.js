@@ -22,14 +22,17 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
     publicKey: _react2.default.PropTypes.string.isRequired,
     placeholder: _react2.default.PropTypes.string,
     onSuggestionSelect: _react2.default.PropTypes.func.isRequired,
-    country: _react2.default.PropTypes.string
+    country: _react2.default.PropTypes.string,
+    query: _react2.default.PropTypes.string,
+    resetSearch: _react2.default.PropTypes.bool
   },
 
   getInitialState: function getInitialState() {
     var state = {
-      query: '',
+      query: this.props.query ? this.props.query : '',
       queryResults: [],
-      publicKey: this.props.publicKey
+      publicKey: this.props.publicKey,
+      resetSearch: this.props.resetSearch ? this.props.resetSearch : false
     };
 
     return state;
@@ -66,10 +69,16 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
     }
   },
   _resetSearch: function _resetSearch() {
-    this.setState({
-      query: '',
-      queryResults: []
-    });
+    if (this.state.resetSearch) {
+      this.setState({
+        query: '',
+        queryResults: []
+      });
+    } else {
+      this.setState(_.extend(this.state, {
+        queryResults: []
+      }));
+    }
   },
   render: function render() {
     var _this2 = this;
@@ -96,7 +105,10 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
               { className: 'react-mapbox-ac-suggestion',
                 onClick: _this2.props.onSuggestionSelect,
                 key: i,
-                'data-suggestion': place.place_name },
+                'data-suggestion': place.place_name,
+                'data-lng': place.center[0],
+                'data-lat': place.center[1],
+                'data-text': place.text },
               place.place_name
             );
           })
