@@ -1,7 +1,7 @@
 {
   "name": "react-mapbox-autocomplete",
   "version": "0.2.0",
-  "description": "independent react componet for mapbox autocomplete",
+  "description": "independent react component for mapbox autocomplete",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel ReactMapboxAutocomplete.js -o index.js",
