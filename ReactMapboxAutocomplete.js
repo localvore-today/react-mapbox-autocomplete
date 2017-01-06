@@ -25,7 +25,7 @@ const ReactMapboxAutocomplete = React.createClass ({
   },
 
   _updateQuery(event) {
-    this.setState(_.extend(this.state, {query: event.target.value}))
+    this.setState(extend(this.state, {query: event.target.value}))
 
     let header = {
       'Content-Type': 'application/json'
@@ -51,12 +51,12 @@ const ReactMapboxAutocomplete = React.createClass ({
       }).then((res) => {
         return res.json()
       }).then((json) => {
-        this.setState(_.extend(this.state, {
+        this.setState(extend(this.state, {
           queryResults: json.features
         }))
       })
     } else {
-      this.setState(_.extend(this.state, {
+      this.setState(extend(this.state, {
         queryResults: []
       }))
     }
@@ -69,7 +69,7 @@ const ReactMapboxAutocomplete = React.createClass ({
         queryResults: []
       })
     } else {
-      this.setState(_.extend(this.state, {
+      this.setState(extend(this.state, {
         queryResults: []
       }))
     }
@@ -77,16 +77,16 @@ const ReactMapboxAutocomplete = React.createClass ({
 
   _onSuggestionSelect(event) {
     if(this.state.resetSearch === false) {
-      this.setState(_.extend(this.state, {
-        query: event.target.dataset.suggestion
+      this.setState(extend(this.state, {
+        query: event.target.getAttribute('data-suggestion')
       }))
     }
 
     this.props.onSuggestionSelect(
-      event.target.dataset.suggestion,
-      event.target.dataset.lat,
-      event.target.dataset.lng,
-      event.target.dataset.text
+      event.target.getAttribute('data-suggestion'),
+      event.target.getAttribute('data-lat'),
+      event.target.getAttribute('data-lng'),
+      event.target.getAttribute('data-text')
     )
   },
 
@@ -107,7 +107,7 @@ const ReactMapboxAutocomplete = React.createClass ({
                onClick={this._resetSearch}>
 
             {
-              _.map(this.state.queryResults, (place, i) => {
+              map(this.state.queryResults, (place, i) => {
                 return(
                   <div className='react-mapbox-ac-suggestion'
                        onClick={this._onSuggestionSelect}
