@@ -10,6 +10,7 @@ const ReactMapboxAutocomplete = React.createClass ({
     onSuggestionSelect: React.PropTypes.func.isRequired,
     country: React.PropTypes.string,
     query: React.PropTypes.string,
+    limit: React.PropTypes.number,
     resetSearch: React.PropTypes.bool
   },
 
@@ -31,19 +32,14 @@ const ReactMapboxAutocomplete = React.createClass ({
       'Content-Type': 'application/json'
     }
 
-    if(this.props.country) {
-      var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-                  this.state.query +
-                  '.json?access_token=' +
-                  this.state.publicKey +
-                  '&country=' +
-                  this.props.country
-    } else {
-      path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-              this.state.query +
-              '.json?access_token=' +
-              this.state.publicKey
-    }
+    let host = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+    let query = `${this.state.query}.json?`;
+    let token = `access_token=${this.state.publicKey}`;
+
+    let countryOpt = this.props.country ? `&country=${this.props.country}` : '';
+    let limitOpt = this.props.limit ? `&limit=${this.props.limit}` : '';
+
+    let path = (host + query + token) + countryOpt + limitOpt;
 
     if(this.state.query.length > 2) {
       return fetch(path, {
