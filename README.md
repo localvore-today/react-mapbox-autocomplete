@@ -37,18 +37,26 @@ with any version of ES.
 
 ### Available PropTypes
 
-publicKey:**Required(String)**
+publicKey: **Required (String)**
 
-inputClass:**Optional(String)**:Used for passing bootstrap or other classes for input styling
+inputClass: **Optional (String)**: Used for passing bootstrap or other classes for input styling
 
-country:**Optional(String)**
+onSuggestionSelect: **Required (Func)**: For handling suggestion selections
 
-onSuggestionSelect:**Required(Func)**:For handling suggestion selections
+query: **Optional (String)**: Pre-populate search field
 
-query:**Optional(String)**:Pre-populate search field
-
-resetSearch:**Optional(Boolean)**: Default is false. Resets the input field
+resetSearch: **Optional (Boolean)**: Default is false. Resets the input field
 after suggestion select
+
+country: **Optional (String)**: Separated by commas
+
+proximity: **Optional (Array)**: [longitude, latitude]
+
+filterTypes: **Optional (String)**: Filter results by one or more type. Options are country, region, postcode, place,  locality, neighborhood, address, poi, poi.landmark  . Multiple options can be comma-separated.
+
+bbox: **Optional (Array)**: Bounding box within which to limit results, given as [minX, minY, maxX, maxY]
+
+limit: **Optional (Numeric)**: Limits the number of results returned.  Default is 5.
 
 ### Retriving Suggestion Information
 you can retrive the event data by targeting event.target.dataset.suggestion as
@@ -70,8 +78,9 @@ _suggestionSelect(result, lat, lng, text) {
 <MapboxAutocomplete publicKey='Your Mapbox Public Key'
                     inputClass='form-control search'
                     onSuggestionSelect={this._suggestionSelect}
-                    country='us'
-                    resetSearch={false}/>
+                    resetSearch={false}
+                    country='us'/>
+
 ```
 
 ## Styling
@@ -107,7 +116,7 @@ You can style the following classes as you see fit.
 ```
 
 ## ToDo
-1. Tests 
+1. Tests
  - Implement JEST
  - Test: each function and render
 2. Add Examples
