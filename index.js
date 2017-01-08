@@ -29,6 +29,8 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
 
   getInitialState: function getInitialState() {
     var state = {
+      error: false,
+      errorMsg: '',
       query: this.props.query ? this.props.query : '',
       queryResults: [],
       publicKey: this.props.publicKey,
@@ -56,14 +58,23 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       return fetch(path, {
         headers: header
       }).then(function (res) {
+        if (!res.ok) throw Error(res.statusText);
         return res.json();
       }).then(function (json) {
         _this.setState((0, _lodash.extend)(_this.state, {
+          error: false,
           queryResults: json.features
+        }));
+      }).catch(function (err) {
+        _this.setState((0, _lodash.extend)(_this.state, {
+          error: true,
+          errorMsg: 'There was a problem retrieving data from mapbox',
+          queryResults: []
         }));
       });
     } else {
       this.setState((0, _lodash.extend)(this.state, {
+        error: false,
         queryResults: []
       }));
     }
@@ -106,7 +117,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'react-mapbox-ac-menu',
-            style: this.state.queryResults.length > 0 ? { display: 'block' } : { display: 'none' },
+            style: this.state.queryResults.length > 0 || this.state.error ? { display: 'block' } : { display: 'none' },
             onClick: this._resetSearch },
           (0, _lodash.map)(this.state.queryResults, function (place, i) {
             return _react2.default.createElement(
@@ -120,7 +131,12 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
                 'data-text': place.text },
               place.place_name
             );
-          })
+          }),
+          this.state.error && _react2.default.createElement(
+            'div',
+            { className: 'react-mapbox-ac-suggestion' },
+            this.state.errorMsg
+          )
         )
       )
     );

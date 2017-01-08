@@ -19,6 +19,26 @@ beforeEach(() => {
   };
 });
 
+describe('render', () => {
+  it('should render component with query results', () => {
+    const wrapper = mount(<ReactMapboxAutocomplete {...state} />);
+    wrapper.setState({ 
+      query: event.target.value,
+      queryResults: mapboxResponse.features
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render component in an error state', () => {
+    const wrapper = mount(<ReactMapboxAutocomplete {...state} />);
+    wrapper.setState({ 
+      error: true,
+      errorMsg: 'There was a problem retrieving data from mapbox'
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
+});
+
 describe('_updateQuery', () => {
   it('should have no query results', () => {
     const wrapper = shallow(<ReactMapboxAutocomplete {...state} />);
@@ -41,7 +61,7 @@ describe('_updateQuery', () => {
     // override fetch mock with failure
     window.fetch = jest.fn().mockImplementation(() => Promise.resolve(mockResponse(400, 'Test Error', '{"status": 400, "statusText": Test Error}')));
 
-    const wrapper = shallow(<ReactMapboxAutocomplete {...state} />);
+    const wrapper = mount(<ReactMapboxAutocomplete {...state} />);
     wrapper.instance()._updateQuery(event)
       .then(() => {
         expect(wrapper.state('error')).toBeTruthy();
