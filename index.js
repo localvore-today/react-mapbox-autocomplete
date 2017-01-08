@@ -40,7 +40,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
   _updateQuery: function _updateQuery(event) {
     var _this = this;
 
-    this.setState(_.extend(this.state, { query: event.target.value }));
+    this.setState((0, _lodash.extend)(this.state, { query: event.target.value }));
 
     var header = {
       'Content-Type': 'application/json'
@@ -58,12 +58,12 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
       }).then(function (res) {
         return res.json();
       }).then(function (json) {
-        _this.setState(_.extend(_this.state, {
+        _this.setState((0, _lodash.extend)(_this.state, {
           queryResults: json.features
         }));
       });
     } else {
-      this.setState(_.extend(this.state, {
+      this.setState((0, _lodash.extend)(this.state, {
         queryResults: []
       }));
     }
@@ -75,19 +75,19 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
         queryResults: []
       });
     } else {
-      this.setState(_.extend(this.state, {
+      this.setState((0, _lodash.extend)(this.state, {
         queryResults: []
       }));
     }
   },
   _onSuggestionSelect: function _onSuggestionSelect(event) {
     if (this.state.resetSearch === false) {
-      this.setState(_.extend(this.state, {
-        query: event.target.dataset.suggestion
+      this.setState((0, _lodash.extend)(this.state, {
+        query: event.target.getAttribute('data-suggestion')
       }));
     }
 
-    this.props.onSuggestionSelect(event.target.dataset.suggestion, event.target.dataset.lat, event.target.dataset.lng, event.target.dataset.text);
+    this.props.onSuggestionSelect(event.target.getAttribute('data-suggestion'), event.target.getAttribute('data-lat'), event.target.getAttribute('data-lng'), event.target.getAttribute('data-text'));
   },
   render: function render() {
     var _this2 = this;
@@ -108,7 +108,7 @@ var ReactMapboxAutocomplete = _react2.default.createClass({
           { className: 'react-mapbox-ac-menu',
             style: this.state.queryResults.length > 0 ? { display: 'block' } : { display: 'none' },
             onClick: this._resetSearch },
-          _.map(this.state.queryResults, function (place, i) {
+          (0, _lodash.map)(this.state.queryResults, function (place, i) {
             return _react2.default.createElement(
               'div',
               { className: 'react-mapbox-ac-suggestion',

@@ -15,6 +15,8 @@ const ReactMapboxAutocomplete = React.createClass ({
 
   getInitialState() {
     let state = {
+      error: false,
+      errorMsg: '',
       query: this.props.query ? this.props.query : '',
       queryResults: [],
       publicKey: this.props.publicKey,
@@ -48,15 +50,24 @@ const ReactMapboxAutocomplete = React.createClass ({
     if(this.state.query.length > 2) {
       return fetch(path, {
         headers: header,
-      }).then((res) => {
+      }).then(res => {
+        if (!res.ok) throw Error(res.statusText)
         return res.json()
-      }).then((json) => {
+      }).then(json => {
         this.setState(extend(this.state, {
+          error: false,
           queryResults: json.features
+        }))
+      }).catch(err => {
+        this.setState(extend(this.state, {
+          error: true,
+          errorMsg: 'There was a problem retrieving data from mapbox',
+          queryResults: []
         }))
       })
     } else {
       this.setState(extend(this.state, {
+        error: false,
         queryResults: []
       }))
     }
@@ -102,7 +113,7 @@ const ReactMapboxAutocomplete = React.createClass ({
                type='text'/>
         <span>
           <div className='react-mapbox-ac-menu'
-               style={this.state.queryResults.length > 0 ? { display: 'block' }
+               style={this.state.queryResults.length > 0 || this.state.error ? { display: 'block' }
                : { display: 'none' }}
                onClick={this._resetSearch}>
 
@@ -123,6 +134,8 @@ const ReactMapboxAutocomplete = React.createClass ({
                 )
               })
             }
+
+            {this.state.error && <div className="react-mapbox-ac-suggestion">{this.state.errorMsg}</div>}
           </div>
         </span>
       </div>

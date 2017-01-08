@@ -9,9 +9,9 @@ import ReactMapboxAutocomplete from '../ReactMapboxAutocomplete';
 
 let state;
 let event = { target: { value: 'Waitsfield' } };
-window.fetch = jest.fn().mockImplementation(() => Promise.resolve(mockResponse(200, null, JSON.stringify(mapboxResponse))));
 
 beforeEach(() => {
+  window.fetch = jest.fn().mockImplementation(() => Promise.resolve(mockResponse(200, null, JSON.stringify(mapboxResponse))));
   state = {
     publicKey: '',
     onSuggestionSelect: jest.fn(),
@@ -30,9 +30,24 @@ describe('_updateQuery', () => {
     const wrapper = shallow(<ReactMapboxAutocomplete {...state} />);
     wrapper.instance()._updateQuery(event)
       .then(() => {
+        expect(wrapper.state('error')).toBeFalsy();
         expect(wrapper.state('query')).toEqual('Waitsfield');
         expect(wrapper.state('queryResults')).toEqual(mapboxResponse.features)
         expect(wrapper.find('.react-mapbox-ac-suggestion')).toHaveLength(1);
+      });
+  });
+
+  it('should handle a failed fetch request', () => {
+    // override fetch mock with failure
+    window.fetch = jest.fn().mockImplementation(() => Promise.resolve(mockResponse(400, 'Test Error', '{"status": 400, "statusText": Test Error}')));
+
+    const wrapper = shallow(<ReactMapboxAutocomplete {...state} />);
+    wrapper.instance()._updateQuery(event)
+      .then(() => {
+        expect(wrapper.state('error')).toBeTruthy();
+        expect(wrapper.state('errorMsg')).toBe('There was a problem retrieving data from mapbox');
+        expect(wrapper.state('queryResults')).toEqual([]);
+        expect(wrapper.find('.react-mapbox-ac-suggestion').first().text()).toBe('There was a problem retrieving data from mapbox');
       });
   });
 });
