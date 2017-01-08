@@ -11,6 +11,10 @@ const ReactMapboxAutocomplete = React.createClass ({
     country: React.PropTypes.string,
     query: React.PropTypes.string,
     limit: React.PropTypes.number,
+    proximity: React.PropTypes.string,
+    types: React.PropTypes.string,
+    bbox: React.PropTypes.string,
+    autocomplete: React.PropTypes.bool,
     resetSearch: React.PropTypes.bool
   },
 
@@ -38,8 +42,13 @@ const ReactMapboxAutocomplete = React.createClass ({
 
     let countryOpt = this.props.country ? `&country=${this.props.country}` : '';
     let limitOpt = this.props.limit ? `&limit=${this.props.limit}` : '';
+    let proximityOpt = this.props.proximity ? `&proximity=${this.props.proximity}` : '';
+    let typesOpt = this.props.types ? `&types=${this.props.types}` : '';
+    let bboxOpt = this.props.bbox ? `&bbox=${this.props.bbox}` : '';
+    let autocompleteOpt = this.props.autocomplete == false ? `&autocomplete=${this.props.autocomplete}` : '';
 
-    let path = (host + query + token) + countryOpt + limitOpt;
+    let path = 
+    (host + query + token) + countryOpt + limitOpt + proximityOpt + typesOpt + bboxOpt + autocompleteOpt;
 
     if(this.state.query.length > 2) {
       return fetch(path, {
