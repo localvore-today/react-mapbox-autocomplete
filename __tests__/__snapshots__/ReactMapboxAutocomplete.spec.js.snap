@@ -1,0 +1,66 @@
+exports[`render should render component in an error state 1`] = `
+<ReactMapboxAutocomplete
+  onSuggestionSelect={[Function]}
+  publicKey=""
+  query="">
+  <div>
+    <input
+      className="react-mapbox-ac-input"
+      onChange={[Function]}
+      placeholder="Search"
+      type="text"
+      value="" />
+    <span>
+      <div
+        className="react-mapbox-ac-menu"
+        onClick={[Function]}
+        style={
+          Object {
+            "display": "block",
+          }
+        }>
+        <div
+          className="react-mapbox-ac-suggestion">
+          There was a problem retrieving data from mapbox
+        </div>
+      </div>
+    </span>
+  </div>
+</ReactMapboxAutocomplete>
+`;
+
+exports[`render should render component with query results 1`] = `
+<ReactMapboxAutocomplete
+  onSuggestionSelect={[Function]}
+  publicKey=""
+  query="">
+  <div>
+    <input
+      className="react-mapbox-ac-input"
+      onChange={[Function]}
+      placeholder="Search"
+      type="text"
+      value="Waitsfield" />
+    <span>
+      <div
+        className="react-mapbox-ac-menu"
+        onClick={[Function]}
+        style={
+          Object {
+            "display": "block",
+          }
+        }>
+        <div
+          className="react-mapbox-ac-suggestion"
+          data-lat={44.1900592468074}
+          data-lng={-72.8245601523668}
+          data-suggestion="Waitsfield Village Historic District, Waitsfield Common, Vermont 05673, United States"
+          data-text="Waitsfield Village Historic District"
+          onClick={[Function]}>
+          Waitsfield Village Historic District, Waitsfield Common, Vermont 05673, United States
+        </div>
+      </div>
+    </span>
+  </div>
+</ReactMapboxAutocomplete>
+`;

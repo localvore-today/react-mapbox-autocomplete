@@ -17,12 +17,13 @@ export default class ReactMapboxAutocomplete extends Component {
   }
 
   _updateQuery(event) {
-    // update query
-    this.setState(_.extend(this.state, {query: event.target.value}));
+
+    this.setState(extend(this.state, {query: event.target.value}));
 
     // only continue for queries 3 chars or longer
     if (this.state.query.length <= 2) {
       return this.setState(_.extend(this.state, {
+        error: false,
         queryResults: []
       }));
     }
@@ -60,45 +61,39 @@ export default class ReactMapboxAutocomplete extends Component {
     return fetch(path, {
       headers: headers,
     }).then((res) => {
+      if (!res.ok) throw Error(res.statusText);
       return res.json();
     }).then((json) => {
       this.setState(_.extend(this.state, {
+        error: false,
         queryResults: json.features
       }));
+    }).catch(err => {
+      this.setState(extend(this.state, {
+        error: true,
+        errorMsg: 'There was a problem retrieving data from mapbox',
+        queryResults: []
+      }))
     });
 
   }
 
   _resetSearch() {
 
-    let newState = {
+    this.setState({
+      query: (this.props.resetSearch) ? event.target.getAttribute('data-suggestion') : '',
       queryResults: []
-    };
-
-    if (this.props.resetSearch) {
-      newState.query = '';
-    }
-
-    this.setState(newState);
+    });
 
   }
 
   _onSuggestionSelect(event) {
 
-    const newState = (this.props.resetSearch) ? {
-      query: '',
-      queryResults: []
-    } : {
-      query: event.target.dataset.suggestion
-    };
-
-    this.setState(_.extend(this.state, newState));
-
     this.props.onSuggestionSelect(
-      event.target.dataset.suggestion,
-      event.target.dataset.lat,
-      event.target.dataset.lng,
-      event.target.dataset.text
+      event.target.getAttribute('data-suggestion'),
+      event.target.getAttribute('data-lat'),
+      event.target.getAttribute('data-lng'),
+      event.target.getAttribute('data-text')
     );
 
     this._resetSearch();
@@ -117,11 +112,10 @@ export default class ReactMapboxAutocomplete extends Component {
                type='text'/>
         <span>
           <div className='react-mapbox-ac-menu'
-               style={this.state.queryResults.length > 0 ? { display: 'block' }
+               style={this.state.queryResults.length > 0 || this.state.error  ? { display: 'block' }
                : { display: 'none' }}>
-
             {
-              _.map(this.state.queryResults, (place, i) => {
+              map(this.state.queryResults, (place, i) => {
                 return(
                   <div className='react-mapbox-ac-suggestion'
                        onClick={this._onSuggestionSelect}
@@ -137,6 +131,8 @@ export default class ReactMapboxAutocomplete extends Component {
                 )
               })
             }
+
+            {this.state.error && <div className="react-mapbox-ac-suggestion">{this.state.errorMsg}</div>}
           </div>
         </span>
       </div>

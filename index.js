@@ -16,17 +16,46 @@ var _lodash = require('lodash');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+<<<<<<< HEAD
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+=======
+var ReactMapboxAutocomplete = _react2.default.createClass({
+  displayName: 'ReactMapboxAutocomplete',
+
+  propTypes: {
+    inputClass: _react2.default.PropTypes.string,
+    publicKey: _react2.default.PropTypes.string.isRequired,
+    placeholder: _react2.default.PropTypes.string,
+    onSuggestionSelect: _react2.default.PropTypes.func.isRequired,
+    country: _react2.default.PropTypes.string,
+    query: _react2.default.PropTypes.string,
+    resetSearch: _react2.default.PropTypes.bool
+  },
+
+  getInitialState: function getInitialState() {
+    var state = {
+      error: false,
+      errorMsg: '',
+      query: this.props.query ? this.props.query : '',
+      queryResults: [],
+      publicKey: this.props.publicKey,
+      resetSearch: this.props.resetSearch ? this.props.resetSearch : false
+    };
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
 
 var ReactMapboxAutocomplete = function (_Component) {
   _inherits(ReactMapboxAutocomplete, _Component);
 
+<<<<<<< HEAD
   function ReactMapboxAutocomplete(props) {
     _classCallCheck(this, ReactMapboxAutocomplete);
+=======
+    this.setState((0, _lodash.extend)(this.state, { query: event.target.value }));
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
 
     // initial state
     var _this = _possibleConstructorReturn(this, (ReactMapboxAutocomplete.__proto__ || Object.getPrototypeOf(ReactMapboxAutocomplete)).call(this, props));
@@ -89,18 +118,36 @@ var ReactMapboxAutocomplete = function (_Component) {
       return fetch(path, {
         headers: headers
       }).then(function (res) {
+        if (!res.ok) throw Error(res.statusText);
         return res.json();
       }).then(function (json) {
+<<<<<<< HEAD
         _this2.setState(_.extend(_this2.state, {
+=======
+        _this.setState((0, _lodash.extend)(_this.state, {
+          error: false,
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
           queryResults: json.features
         }));
+      }).catch(function (err) {
+        _this.setState((0, _lodash.extend)(_this.state, {
+          error: true,
+          errorMsg: 'There was a problem retrieving data from mapbox',
+          queryResults: []
+        }));
       });
+<<<<<<< HEAD
     }
   }, {
     key: '_resetSearch',
     value: function _resetSearch() {
 
       var newState = {
+=======
+    } else {
+      this.setState((0, _lodash.extend)(this.state, {
+        error: false,
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
         queryResults: []
       };
 
@@ -117,6 +164,7 @@ var ReactMapboxAutocomplete = function (_Component) {
       var newState = this.props.resetSearch ? {
         query: '',
         queryResults: []
+<<<<<<< HEAD
       } : {
         query: event.target.dataset.suggestion
       };
@@ -126,14 +174,46 @@ var ReactMapboxAutocomplete = function (_Component) {
       this.props.onSuggestionSelect(event.target.dataset.suggestion, event.target.dataset.lat, event.target.dataset.lng, event.target.dataset.text);
 
       this._resetSearch();
+=======
+      });
+    } else {
+      this.setState((0, _lodash.extend)(this.state, {
+        queryResults: []
+      }));
+    }
+  },
+  _onSuggestionSelect: function _onSuggestionSelect(event) {
+    if (this.state.resetSearch === false) {
+      this.setState((0, _lodash.extend)(this.state, {
+        query: event.target.getAttribute('data-suggestion')
+      }));
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
     }
   }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
 
+<<<<<<< HEAD
       return _react2.default.createElement(
         'div',
+=======
+    this.props.onSuggestionSelect(event.target.getAttribute('data-suggestion'), event.target.getAttribute('data-lat'), event.target.getAttribute('data-lng'), event.target.getAttribute('data-text'));
+  },
+  render: function render() {
+    var _this2 = this;
+
+    return _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement('input', { placeholder: this.props.placeholder || 'Search',
+        className: this.props.inputClass ? this.props.inputClass + ' react-mapbox-ac-input' : 'react-mapbox-ac-input',
+        onChange: this._updateQuery,
+        value: this.state.query,
+        type: 'text' }),
+      _react2.default.createElement(
+        'span',
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
         null,
         _react2.default.createElement('input', { placeholder: this.props.placeholder || 'Search',
           className: this.props.inputClass ? this.props.inputClass + ' react-mapbox-ac-input' : 'react-mapbox-ac-input',
@@ -141,6 +221,7 @@ var ReactMapboxAutocomplete = function (_Component) {
           value: this.state.query,
           type: 'text' }),
         _react2.default.createElement(
+<<<<<<< HEAD
           'span',
           null,
           _react2.default.createElement(
@@ -160,6 +241,29 @@ var ReactMapboxAutocomplete = function (_Component) {
                 place.place_name
               );
             })
+=======
+          'div',
+          { className: 'react-mapbox-ac-menu',
+            style: this.state.queryResults.length > 0 || this.state.error ? { display: 'block' } : { display: 'none' },
+            onClick: this._resetSearch },
+          (0, _lodash.map)(this.state.queryResults, function (place, i) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'react-mapbox-ac-suggestion',
+                onClick: _this2._onSuggestionSelect,
+                key: i,
+                'data-suggestion': place.place_name,
+                'data-lng': place.center[0],
+                'data-lat': place.center[1],
+                'data-text': place.text },
+              place.place_name
+            );
+          }),
+          this.state.error && _react2.default.createElement(
+            'div',
+            { className: 'react-mapbox-ac-suggestion' },
+            this.state.errorMsg
+>>>>>>> c7fafd86364ae16b012a2f4512c00f21a1deb807
           )
         )
       );
