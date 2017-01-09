@@ -81,6 +81,7 @@ export default class ReactMapboxAutocomplete extends Component {
   _resetSearch() {
 
     this.setState({
+      error: false,
       query: (this.props.resetSearch) ? event.target.getAttribute('data-suggestion') : '',
       queryResults: []
     });
