@@ -22,7 +22,7 @@ export default class ReactMapboxAutocomplete extends Component {
 
     // only continue for queries 3 chars or longer
     if (this.state.query.length <= 2) {
-      return this.setState(_.extend(this.state, {
+      return this.setState(extend(this.state, {
         error: false,
         queryResults: []
       }));
@@ -60,11 +60,11 @@ export default class ReactMapboxAutocomplete extends Component {
     // fetch mapbox API then update queryResults state
     return fetch(path, {
       headers: headers,
-    }).then((res) => {
+    }).then(res => {
       if (!res.ok) throw Error(res.statusText);
       return res.json();
-    }).then((json) => {
-      this.setState(_.extend(this.state, {
+    }).then(json => {
+      this.setState(extend(this.state, {
         error: false,
         queryResults: json.features
       }));
