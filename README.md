@@ -116,13 +116,15 @@ You can style the following classes as you see fit.
 ```
 
 ## ToDo
-1. Tests
- - Implement JEST
- - Test: each function and render
+1. ~~Tests~~
+ - ~~Implement JEST~~
+ - ~~Test: each function and render~~
+
 2. Add Examples
  - add examples to project in a folder called "Examples"
-3. Add all query params as Props
- - implement the remainder of query params from https://www.mapbox.com/api-documentation/#request-format
+
+3. ~~Add all query params as Props~~
+ - ~~implement the remainder of query params from https://www.mapbox.com/api-documentation/#request-format~~
 
 ## Contributing
 If you would like to contribute to react-mapbox-autocomplete fork the project
