@@ -1,105 +1,105 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './index.css';
 import { map, extend } from 'lodash';
 
-const ReactMapboxAutocomplete = React.createClass ({
-  propTypes: {
-    inputClass: React.PropTypes.string,
-    publicKey: React.PropTypes.string.isRequired,
-    placeholder: React.PropTypes.string,
-    onSuggestionSelect: React.PropTypes.func.isRequired,
-    country: React.PropTypes.string,
-    query: React.PropTypes.string,
-    resetSearch: React.PropTypes.bool
-  },
+export default class ReactMapboxAutocomplete extends Component {
 
-  getInitialState() {
-    let state = {
-      error: false,
-      errorMsg: '',
-      query: this.props.query ? this.props.query : '',
+  constructor(props) {
+    super(props);
+    // initial state
+    this.state = {
+      query: props.query || '',
       queryResults: [],
-      publicKey: this.props.publicKey,
-      resetSearch: this.props.resetSearch ? this.props.resetSearch : false
-    }
-
-    return state;
-  },
+    };
+    // bind this
+    this._updateQuery = this._updateQuery.bind(this);
+    this._onSuggestionSelect = this._onSuggestionSelect.bind(this);
+  }
 
   _updateQuery(event) {
-    this.setState(extend(this.state, {query: event.target.value}))
 
-    let header = {
-      'Content-Type': 'application/json'
-    }
+    this.setState(extend(this.state, {query: event.target.value}));
 
-    if(this.props.country) {
-      var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-                  this.state.query +
-                  '.json?access_token=' +
-                  this.state.publicKey +
-                  '&country=' +
-                  this.props.country
-    } else {
-      path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-              this.state.query +
-              '.json?access_token=' +
-              this.state.publicKey
-    }
-
-    if(this.state.query.length > 2) {
-      return fetch(path, {
-        headers: header,
-      }).then(res => {
-        if (!res.ok) throw Error(res.statusText)
-        return res.json()
-      }).then(json => {
-        this.setState(extend(this.state, {
-          error: false,
-          queryResults: json.features
-        }))
-      }).catch(err => {
-        this.setState(extend(this.state, {
-          error: true,
-          errorMsg: 'There was a problem retrieving data from mapbox',
-          queryResults: []
-        }))
-      })
-    } else {
-      this.setState(extend(this.state, {
+    // only continue for queries 3 chars or longer
+    if (this.state.query.length <= 2) {
+      return this.setState(extend(this.state, {
         error: false,
         queryResults: []
-      }))
+      }));
     }
-  },
+
+    // helper
+    const validateNumericArray = function(array, len) {
+      return (array && array.length === len) && array.every(function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      });
+    };
+
+    // preparing API request
+    const apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json';
+    const qsParams = {
+      access_token: this.props.publicKey,
+      country: this.props.country,
+      limit: this.props.limit,
+      types: this.props.filterTypes,
+      proximity: validateNumericArray(this.props.proximity, 2) ? this.props.proximity.join(',') : null,
+      bbox: validateNumericArray(this.props.bbox, 4) ? this.props.proximity.join(',') : null
+    };
+    const path = apiEndpoint + '?' + (function objectToQuerystring(obj) {
+      return Object.keys(obj).filter((key) => {
+        return !!obj[key];
+      }).map((key) => {
+        return key + '=' + obj[key];
+      }).join('&');
+    })(qsParams);
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+    // fetch mapbox API then update queryResults state
+    return fetch(path, {
+      headers: headers,
+    }).then(res => {
+      if (!res.ok) throw Error(res.statusText);
+      return res.json();
+    }).then(json => {
+      this.setState(extend(this.state, {
+        error: false,
+        queryResults: json.features
+      }));
+    }).catch(err => {
+      this.setState(extend(this.state, {
+        error: true,
+        errorMsg: 'There was a problem retrieving data from mapbox',
+        queryResults: []
+      }))
+    });
+
+  }
 
   _resetSearch() {
-    if(this.state.resetSearch) {
-      this.setState({
-        query: '',
-        queryResults: []
-      })
-    } else {
-      this.setState(extend(this.state, {
-        queryResults: []
-      }))
-    }
-  },
+
+    this.setState({
+      error: false,
+      query: (this.props.resetSearch) ? event.target.getAttribute('data-suggestion') : '',
+      queryResults: []
+    });
+
+  }
 
   _onSuggestionSelect(event) {
-    if(this.state.resetSearch === false) {
-      this.setState(extend(this.state, {
-        query: event.target.getAttribute('data-suggestion')
-      }))
-    }
 
     this.props.onSuggestionSelect(
       event.target.getAttribute('data-suggestion'),
       event.target.getAttribute('data-lat'),
       event.target.getAttribute('data-lng'),
       event.target.getAttribute('data-text')
-    )
-  },
+    );
+
+    this._resetSearch();
+
+  }
 
   render() {
     return (
@@ -113,10 +113,8 @@ const ReactMapboxAutocomplete = React.createClass ({
                type='text'/>
         <span>
           <div className='react-mapbox-ac-menu'
-               style={this.state.queryResults.length > 0 || this.state.error ? { display: 'block' }
-               : { display: 'none' }}
-               onClick={this._resetSearch}>
-
+               style={this.state.queryResults.length > 0 || this.state.error  ? { display: 'block' }
+               : { display: 'none' }}>
             {
               map(this.state.queryResults, (place, i) => {
                 return(
@@ -141,6 +139,18 @@ const ReactMapboxAutocomplete = React.createClass ({
       </div>
     );
   }
-})
+}
 
-export default ReactMapboxAutocomplete;
+ReactMapboxAutocomplete.propTypes = {
+  inputClass: React.PropTypes.string,
+  publicKey: React.PropTypes.string.isRequired,
+  placeholder: React.PropTypes.string,
+  onSuggestionSelect: React.PropTypes.func.isRequired,
+  country: React.PropTypes.string,
+  query: React.PropTypes.string,
+  resetSearch: React.PropTypes.bool,
+  limit: React.PropTypes.number,
+  types: React.PropTypes.string,
+  proximity: React.PropTypes.array,
+  bbox: React.PropTypes.array
+};

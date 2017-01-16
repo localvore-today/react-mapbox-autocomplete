@@ -13,7 +13,6 @@ exports[`render should render component in an error state 1`] = `
     <span>
       <div
         className="react-mapbox-ac-menu"
-        onClick={[Function]}
         style={
           Object {
             "display": "block",
@@ -44,7 +43,6 @@ exports[`render should render component with query results 1`] = `
     <span>
       <div
         className="react-mapbox-ac-menu"
-        onClick={[Function]}
         style={
           Object {
             "display": "block",
