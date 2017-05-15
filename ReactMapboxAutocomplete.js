@@ -1,96 +1,67 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { map } from 'lodash';
 import './index.css';
-import { map, extend } from 'lodash';
 
-const ReactMapboxAutocomplete = React.createClass ({
-  propTypes: {
-    inputClass: React.PropTypes.string,
-    publicKey: React.PropTypes.string.isRequired,
-    placeholder: React.PropTypes.string,
-    onSuggestionSelect: React.PropTypes.func.isRequired,
-    country: React.PropTypes.string,
-    query: React.PropTypes.string,
-    resetSearch: React.PropTypes.bool
-  },
+class ReactMapboxAutocomplete extends React.Component {
+  state = {
+    error: false,
+    errorMsg: '',
+    query: this.props.query ? this.props.query : '',
+    queryResults: [],
+    publicKey: this.props.publicKey,
+    resetSearch: this.props.resetSearch ? this.props.resetSearch : false
+  }
 
-  getInitialState() {
-    let state = {
-      error: false,
-      errorMsg: '',
-      query: this.props.query ? this.props.query : '',
-      queryResults: [],
-      publicKey: this.props.publicKey,
-      resetSearch: this.props.resetSearch ? this.props.resetSearch : false
-    }
-
-    return state;
-  },
-
-  _updateQuery(event) {
-    this.setState(extend(this.state, {query: event.target.value}))
-
-    let header = {
-      'Content-Type': 'application/json'
-    }
+  _updateQuery = event => {
+    this.setState({ query: event.target.value });
+    const header = { 'Content-Type': 'application/json' };
+    let path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey;
 
     if(this.props.country) {
-      var path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-                  this.state.query +
-                  '.json?access_token=' +
-                  this.state.publicKey +
-                  '&country=' +
-                  this.props.country
-    } else {
-      path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-              this.state.query +
-              '.json?access_token=' +
-              this.state.publicKey
+      path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey + '&country=' + this.props.country;
     }
 
     if(this.state.query.length > 2) {
       return fetch(path, {
         headers: header,
       }).then(res => {
-        if (!res.ok) throw Error(res.statusText)
-        return res.json()
+        if (!res.ok) throw Error(res.statusText);
+        return res.json();
       }).then(json => {
-        this.setState(extend(this.state, {
+        this.setState({
           error: false,
           queryResults: json.features
-        }))
+        });
       }).catch(err => {
-        this.setState(extend(this.state, {
+        this.setState({
           error: true,
           errorMsg: 'There was a problem retrieving data from mapbox',
           queryResults: []
-        }))
+        });
       })
     } else {
-      this.setState(extend(this.state, {
+      this.setState({
         error: false,
         queryResults: []
-      }))
+      });
     }
-  },
+  }
 
-  _resetSearch() {
+  _resetSearch = () => {
     if(this.state.resetSearch) {
       this.setState({
         query: '',
         queryResults: []
-      })
+      });
     } else {
-      this.setState(extend(this.state, {
-        queryResults: []
-      }))
+      this.setState({ queryResults: [] });
     }
-  },
+  }
 
-  _onSuggestionSelect(event) {
+  _onSuggestionSelect = event => {
     if(this.state.resetSearch === false) {
-      this.setState(extend(this.state, {
-        query: event.target.getAttribute('data-suggestion')
-      }))
+      this.setState({ query: event.target.getAttribute('data-suggestion') });
     }
 
     this.props.onSuggestionSelect(
@@ -99,7 +70,7 @@ const ReactMapboxAutocomplete = React.createClass ({
       event.target.getAttribute('data-lng'),
       event.target.getAttribute('data-text')
     )
-  },
+  }
 
   render() {
     return (
@@ -141,6 +112,16 @@ const ReactMapboxAutocomplete = React.createClass ({
       </div>
     );
   }
-})
+}
+
+ReactMapboxAutocomplete.propTypes = {
+  inputClass: PropTypes.string,
+  publicKey: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  onSuggestionSelect: PropTypes.func.isRequired,
+  country: PropTypes.string,
+  query: PropTypes.string,
+  resetSearch: PropTypes.bool
+}
 
 export default ReactMapboxAutocomplete;
