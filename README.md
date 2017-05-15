@@ -9,6 +9,9 @@ maps. It's designed to be extremely light weight and simple to use.
 
 ## Change Log
 ```
+version 0.2.3
+Upgrade to React es6 class implmentation and updated babel presets
+
 version 0.2.2
 Bug fixes for search results when resetSearch is false
 
