@@ -76,6 +76,10 @@ class ReactMapboxAutocomplete extends React.Component {
     return (
       <div>
         <input placeholder={ this.props.placeholder || 'Search' }
+               id={this.props.inputId}
+               onClick={this.props.inputOnClick} 
+               onBlur={this.props.inputOnBlur}
+               onFocus={this.props.inputOnFocus}
                className={this.props.inputClass ?
                           this.props.inputClass + ' react-mapbox-ac-input'
                           : 'react-mapbox-ac-input'}
@@ -114,7 +118,18 @@ class ReactMapboxAutocomplete extends React.Component {
   }
 }
 
+ReactMapboxAutocomplete.defaultProps = {
+  inputId: null,
+  inputOnFocus: null,
+  inputOnBlur: null,
+  inputOnClick: null
+};
+
 ReactMapboxAutocomplete.propTypes = {
+  inputId: PropTypes.string,
+  inputOnFocus: PropTypes.func,
+  inputOnBlur: PropTypes.func,
+  inputOnClick: PropTypes.func,
   inputClass: PropTypes.string,
   publicKey: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
