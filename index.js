@@ -107,6 +107,10 @@ var ReactMapboxAutocomplete = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement('input', { placeholder: this.props.placeholder || 'Search',
+          id: this.props.inputId,
+          onClick: this.props.inputOnClick,
+          onBlur: this.props.inputOnBlur,
+          onFocus: this.props.inputOnFocus,
           className: this.props.inputClass ? this.props.inputClass + ' react-mapbox-ac-input' : 'react-mapbox-ac-input',
           onChange: this._updateQuery,
           value: this.state.query,
@@ -146,7 +150,18 @@ var ReactMapboxAutocomplete = function (_React$Component) {
   return ReactMapboxAutocomplete;
 }(_react2.default.Component);
 
+ReactMapboxAutocomplete.defaultProps = {
+  inputId: null,
+  inputOnFocus: null,
+  inputOnBlur: null,
+  inputOnClick: null
+};
+
 ReactMapboxAutocomplete.propTypes = {
+  inputId: _propTypes2.default.string,
+  inputOnFocus: _propTypes2.default.func,
+  inputOnBlur: _propTypes2.default.func,
+  inputOnClick: _propTypes2.default.func,
   inputClass: _propTypes2.default.string,
   publicKey: _propTypes2.default.string.isRequired,
   placeholder: _propTypes2.default.string,
