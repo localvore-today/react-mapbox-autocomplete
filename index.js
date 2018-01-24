@@ -94,7 +94,7 @@ var ReactMapboxAutocomplete = function (_React$Component) {
         _this.setState({ query: event.target.getAttribute('data-suggestion') });
       }
 
-      _this.props.onSuggestionSelect(event.target.getAttribute('data-suggestion'), event.target.getAttribute('data-lat'), event.target.getAttribute('data-lng'), event.target.getAttribute('data-text'));
+      _this.props.onSuggestionSelect(event.target.getAttribute('data'), event.target.getAttribute('data-suggestion'), event.target.getAttribute('data-lat'), event.target.getAttribute('data-lng'), event.target.getAttribute('data-text'));
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -129,6 +129,7 @@ var ReactMapboxAutocomplete = function (_React$Component) {
                 { className: 'react-mapbox-ac-suggestion',
                   onClick: _this2._onSuggestionSelect,
                   key: i,
+                  data: place,
                   'data-suggestion': place.place_name,
                   'data-lng': place.center[0],
                   'data-lat': place.center[1],
