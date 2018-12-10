@@ -18,6 +18,10 @@ class ReactMapboxAutocomplete extends React.Component {
         const header = {'Content-Type': 'application/json'};
         let path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey;
 
+        if (this.props.country) {
+            path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey + '&country=' + this.props.country;
+        }
+
         this.props.params.forEach(param => {
             path += `&${param.type}=${param.value}`;
         });
@@ -137,6 +141,7 @@ ReactMapboxAutocomplete.propTypes = {
     publicKey: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     onSuggestionSelect: PropTypes.func.isRequired,
+    country: PropTypes.string,
     params: PropTypes.array, // add optional query params, options include:
     // [ country, language, limit, reverseMode, routing, types ]
     // More info: https://www.mapbox.com/api-documentation/#retrieve-places-near-a-location
