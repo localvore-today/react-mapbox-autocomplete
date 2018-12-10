@@ -69,11 +69,11 @@ class ReactMapboxAutocomplete extends React.Component {
         }
 
         this.props.onSuggestionSelect(
-            event.target.getAttribute('data-place'),
             event.target.getAttribute('data-suggestion'),
             event.target.getAttribute('data-lat'),
             event.target.getAttribute('data-lng'),
-            event.target.getAttribute('data-text')
+            event.target.getAttribute('data-text'),
+            event.target.getAttribute('data-place')
         )
     }
 
