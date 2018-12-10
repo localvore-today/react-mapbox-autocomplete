@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {map} from 'lodash';
+import map from 'lodash/map';
 import './index.css';
 
 class ReactMapboxAutocomplete extends React.Component {
@@ -18,9 +18,9 @@ class ReactMapboxAutocomplete extends React.Component {
         const header = {'Content-Type': 'application/json'};
         let path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey;
 
-        if (this.props.country) {
-            path = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + this.state.query + '.json?access_token=' + this.state.publicKey + '&country=' + this.props.country;
-        }
+        this.props.params.forEach(param => {
+            path += `&${param.type}=${param.value}`;
+        });
 
         if (this.state.query.length > 2) {
             return fetch(path, {
@@ -99,7 +99,7 @@ class ReactMapboxAutocomplete extends React.Component {
                         <div className='react-mapbox-ac-suggestion'
                              onClick={this._onSuggestionSelect}
                              key={i}
-                             data-place={place}
+                             data-place={JSON.stringify(place)}
                              data-suggestion={place.place_name}
                              data-lng={place.center[0]}
                              data-lat={place.center[1]}
@@ -124,7 +124,8 @@ ReactMapboxAutocomplete.defaultProps = {
     inputId: null,
     inputOnFocus: null,
     inputOnBlur: null,
-    inputOnClick: null
+    inputOnClick: null,
+    params: []
 };
 
 ReactMapboxAutocomplete.propTypes = {
@@ -136,7 +137,10 @@ ReactMapboxAutocomplete.propTypes = {
     publicKey: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     onSuggestionSelect: PropTypes.func.isRequired,
-    country: PropTypes.string,
+    params: PropTypes.array, // add optional query params, options include:
+    // [ country, language, limit, reverseMode, routing, types ]
+    // More info: https://www.mapbox.com/api-documentation/#retrieve-places-near-a-location
+    // prop type is array of { type, value } objects, where value is consistent with Mapbox API requirements
     query: PropTypes.string,
     resetSearch: PropTypes.bool
 }
